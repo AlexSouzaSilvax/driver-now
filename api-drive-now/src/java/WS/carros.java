@@ -37,6 +37,7 @@ public class carros {
 
     /**
      * Retrieves representation of an instance of Carro.carros
+     *
      * @return an instance of java.lang.String
      */
     @GET
@@ -56,11 +57,19 @@ public class carros {
 
     /**
      * PUT method for updating or creating an instance of carros
+     *
      * @param content representation for the resource
      * @return an HTTP response with content of the updated or created resource.
      */
     @PUT
     @Consumes("application/json")
-    public void putJson(String content) {
+    @Path("/alterar")
+    public void alterar(String content) {
+        System.out.println("Entrou no metodo alterar carro.");
+        System.out.println(content);
+        Gson g = new Gson();
+        CarroBean u = (CarroBean) g.fromJson(content, CarroBean.class);
+        CarroDAO dao = new CarroDAO();
+        dao.alterar(u);
     }
 }

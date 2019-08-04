@@ -76,6 +76,12 @@ value
 ('https://img2.icarros.com/dbimg/imgmodelo/4/2381_6.png','New Fiesta SE','Ford','2019','59.001')
 ;
 
+insert into carro
+(img,nome,marca,ano,valor)
+value
+('https://s2.glbimg.com/Xz8kfnpltyVU2F_yT6yoeJXP9Bs=/620x413/e.glbimg.com/og/ed/f/original/2018/10/05/chevette.jpg','Chevette SE 87','Chevrolet','1987','30.000')
+;
+
 delete from carro where id in (5,6);
 
 select * from carro;
@@ -120,3 +126,5 @@ value
 ;
 
 select * from moto;
+
+select * from carro;

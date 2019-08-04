@@ -6,11 +6,14 @@
 package Carro;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import util.Conexao;
 
 /**
@@ -18,7 +21,7 @@ import util.Conexao;
  * @author alex
  */
 public class CarroDAO {
-    
+
     public List<CarroBean> listaCarro(String clausula) {
 
         try {
@@ -51,5 +54,29 @@ public class CarroDAO {
             return null;
         }
     }
-    
+
+    public CarroBean alterar(CarroBean c) {
+        try {
+            Connection conexao = Conexao.getConexao();
+            PreparedStatement ps;
+            ps = conexao.prepareStatement("update carro set nome = ?, marca = ?, ano = ?, valor = ? where id = ?");
+
+            ps.setString(1, c.getNome());
+            ps.setString(2, c.getMarca());
+            ps.setString(3, c.getAno());
+            ps.setString(4, c.getValor());
+
+            ps.setString(5, c.getId());
+
+            ps.execute();
+            Conexao.fecharConexao();
+
+            System.out.println("Alterado com sucesso.");
+            
+        } catch (SQLException ex) {
+            System.out.println("Erro ao alterar DAO " + ex.getMessage());
+        }
+        return c;
+    }
+
 }
