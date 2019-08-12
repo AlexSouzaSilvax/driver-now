@@ -14,9 +14,11 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
 import javax.ws.rs.Produces;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PUT;
+import javax.ws.rs.PathParam;
 
 /**
  * REST Web Service
@@ -37,13 +39,14 @@ public class motos {
 
     /**
      * Retrieves representation of an instance of Carro.carros
+     *
      * @return an instance of java.lang.String
      */
     @GET
     @Produces("application/json")
     public String getJson() {
         //return "sou foda";
-       MotoDAO mDAO = new MotoDAO();
+        MotoDAO mDAO = new MotoDAO();
 
         List<MotoBean> listaMotos = new ArrayList<MotoBean>();
 
@@ -56,11 +59,26 @@ public class motos {
 
     /**
      * PUT method for updating or creating an instance of carros
+     *
      * @param content representation for the resource
      * @return an HTTP response with content of the updated or created resource.
      */
     @PUT
     @Consumes("application/json")
-    public void putJson(String content) {
+    @Path("/alterar")
+    public void alterar(String content) {
+        System.out.println("Entrou no metodo alterar Moto.");
+        System.out.println(content);
+        Gson g = new Gson();
+        MotoBean u = (MotoBean) g.fromJson(content, MotoBean.class);
+        MotoDAO dao = new MotoDAO();
+        dao.alterar(u);
+    }
+
+    @DELETE
+    @Path("/deletar/{id}")
+    public void delete(@PathParam("id") String id) {
+        MotoDAO cDAO = new MotoDAO();
+        cDAO.deletar(id);
     }
 }

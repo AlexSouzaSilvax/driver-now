@@ -18,7 +18,7 @@ import util.Conexao;
  * @author alex
  */
 public class MotoDAO {
-    
+
     public List<MotoBean> listaMoto() {
 
         try {
@@ -51,5 +51,47 @@ public class MotoDAO {
             return null;
         }
     }
+
+    public MotoBean alterar(MotoBean m) {
+        try {
+            Connection conexao = Conexao.getConexao();
+            PreparedStatement ps;
+            ps = conexao.prepareStatement("update moto set nome = ?, marca = ?, ano = ?, valor = ? where id = ?");
+
+            ps.setString(1, m.getNome());
+            ps.setString(2, m.getMarca());
+            ps.setString(3, m.getAno());
+            ps.setString(4, m.getValor());
+
+            ps.setString(5, m.getId());
+
+            ps.execute();
+            Conexao.fecharConexao();
+
+            System.out.println("Alterado com sucesso.");
+
+        } catch (SQLException ex) {
+            System.out.println("Erro ao alterar DAO " + ex.getMessage());
+        }
+        return m;
+    }
     
+    public String deletar(String id) {
+
+        try {
+            Connection conexao = Conexao.getConexao();
+            PreparedStatement ps;
+            ps = conexao.prepareStatement("delete from moto where id = ?");
+
+            ps.setString(1, id);
+
+            ps.execute();
+            Conexao.fecharConexao();
+            System.out.println("MotoDAO deletado com sucesso. ID: " + id);
+        } catch (SQLException ex) {            
+            System.out.println("Erro ao deletar MotoDAO " + ex.getMessage());
+        }
+        return id;
+    }
+
 }
